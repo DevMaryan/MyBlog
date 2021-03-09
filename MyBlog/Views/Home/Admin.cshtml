@@ -1,0 +1,40 @@
+﻿@model List<MyBlog.Models.Blog>
+@{
+    @ViewBag.Blog;
+}
+<div id="container">
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Image</th>
+                <th scope="col">Author</th>
+                <th scope="col">Date</th>
+                <th scope="col">Read</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in @Model)
+            {
+                <tr>
+                    <td>@article.Id</td>
+                    <td>@article.Title</td>
+                    <td><img src="@article.ImageUrl" style="width:45px;height:45px;border-radius:3px;object-fit:cover;" /></td>
+                    <td>@article.Author</td>
+                    <td>@article.Date</td>
+                    <th><a href="" class="btn btn-info">Read</a></th>
+                    <th><a href="" class="btn btn-warning">Update</a></th>
+                    <th><a href="" class="btn btn-danger">Delete</a></th>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>
