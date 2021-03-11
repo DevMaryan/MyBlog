@@ -1,6 +1,6 @@
-﻿@model  List<MyBlog.Models.Blog>
+﻿@model List<MyBlog.Models.Blog>
 @{
-    @ViewBag.Title;
+    ViewBag.Title = "My Blog Page";
 }
 
 <div class="container-fluid">
@@ -23,14 +23,15 @@
                     <div class="card-footer">
                         <small class="text-muted">@article.Author</small>
                         <small class="text-muted">@article.Date</small>
-                        <button class="btn btn-primary">Read More</button>
+                        <a href="/Home/Detail/@article.Id"><button class="btn btn-primary" href="/Home/Detail/@article.Id">Read More</button></a>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-            }
+    }
 
 </div>
 
