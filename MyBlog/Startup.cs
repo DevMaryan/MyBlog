@@ -8,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyBlog.Repositories.Interfaces;
+using MyBlog.Repositories;
+using MyBlog.Services;
+using MyBlog.Services.Interfaces;
 
 namespace MyBlog
 {
@@ -24,6 +28,8 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IBlogRepository, BlogFileRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +38,7 @@ namespace MyBlog
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {

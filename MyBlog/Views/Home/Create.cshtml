@@ -1,37 +1,35 @@
-﻿@{
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model MyBlog.Models.Blog;
+@{
     ViewBag.Title = "Create Article";
 }
 
 <div class="container d-flex justify-content-center">
     <div style="width:600px;">
-        <form>
+        <form asp-controller="Home" asp-action="Create" method="POST">
             <div class="form-group">
-                <label for="exampleFormControlInput1">Article ID</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1">
+                <label for="Title">Article Title</label>
+                <input type="text" asp-for="Title" class="form-control" id="Title" required>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput1">Article Title</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <label for="ImageUrl">Article ImageUrl</label>
+                <input type="text" asp-for="ImageUrl" class="form-control" id="ImageUrl" required>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput1">Article ImageUrl</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Article Author</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <label for="Author">Article Author</label>
+                <input type="text" asp-for="Author" class="form-control" id="Author" required>
             </div>
 
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Article Content</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label for="Content">Article Content</label>
+                <textarea class="form-control" asp-for="Content" id="Content" rows="3" required></textarea>
             </div>
 
             <div class="form-group">
-                <label for="exampleFormControlInput1">Article Date</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1">
+                <label for="Date">Article Date</label>
+                <input type="date" asp-for="Date" class="form-control" id="Date" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg">Post</button>
+            <button type="submit" class="btn btn-primary btn-lg">Create</button>
         </form>
     </div>
 

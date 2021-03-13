@@ -5,6 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="BlogRepository.OLDFILE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="BlogRepository.OLDFILE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MyBlog.Models\MyBlog.Models.csproj" />
   </ItemGroup>
 
