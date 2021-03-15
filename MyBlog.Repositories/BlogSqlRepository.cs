@@ -69,13 +69,13 @@ namespace MyBlog.Repositories
 
                 while (reader.Read())
                 {
-                    var article = new Blog();
-                    article.Id = reader.GetInt32(0);
-                    article.Title = reader.GetString(1);
-                    article.ImageUrl = reader.GetString(2);
-                    article.Author = reader.GetString(3);
-                    article.Content = reader.GetString(4);
-                    article.Date = reader.GetDateTime(5);
+                    result = new Blog();
+                    result.Id = reader.GetInt32(0);
+                    result.Title = reader.GetString(1);
+                    result.ImageUrl = reader.GetString(2);
+                    result.Author = reader.GetString(3);
+                    result.Content = reader.GetString(4);
+                    result.Date = reader.GetDateTime(5);
                 }
             }
             return result;

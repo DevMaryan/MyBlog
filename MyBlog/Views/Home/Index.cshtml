@@ -14,7 +14,7 @@
                     <div class="card-horizontal">
                         <div class="img-square-wrapper">
                             <div class="card">
-                                <img class="card-img-left" src="@article.ImageUrl" alt="Card image cap">
+                                <img class="card-img-left" src="@article.ImageUrl" alt="Card image cap" style="height:300px;object-fit:cover;">
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">@article.Title</h5>
@@ -25,7 +25,6 @@
                             <small class="text-muted">@article.Author</small>
                             <small class="text-muted">@article.Date</small>
                             <a href="/Home/Detail/@article.Id"><button class="btn btn-primary">Read More</button></a>
-
                         </div>
                     </div>
                 </div>
