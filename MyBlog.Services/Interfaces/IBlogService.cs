@@ -8,9 +8,11 @@ namespace MyBlog.Services.Interfaces
     public interface IBlogService
     {
         List<Blog> GetAllArticles();
+        List<Blog> GetArticleByTitle(string title);
 
         Blog GetArticleById(int id);
 
         void CreateArticle(Blog article);
+        void DeleteArticle(Blog article);
     }
 }

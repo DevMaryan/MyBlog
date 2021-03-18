@@ -17,11 +17,14 @@ namespace MyBlog.Controllers
         {
             _service = service;
         }
-        public IActionResult Index()
+        // Index Page - Search as well
+        public IActionResult Index(string title)
         {
-            var all_articles = _service.GetAllArticles();
+            var all_articles = _service.GetArticleByTitle(title);
             return View(all_articles);
         }
+
+        // Create Article
         [HttpGet]
         public IActionResult Create()
         {
@@ -37,11 +40,21 @@ namespace MyBlog.Controllers
             }
             return View(article);
         }
+        // Delete Articles
+        public IActionResult Delete(Blog article)
+        {
+            _service.DeleteArticle(article);
+            return RedirectToAction("Index");
+        }
+
+        // Update Articles
         public IActionResult Update()
         {
             return View();
         }
 
+        // Detail View ARticle
+       
         public IActionResult Detail(int id)
         {
             var select_article = _service.GetArticleById(id);
@@ -52,6 +65,7 @@ namespace MyBlog.Controllers
             return View(select_article);
         }
 
+        // Admin Page
         public IActionResult Admin()
         {
 

@@ -33,5 +33,23 @@ namespace MyBlog.Services
         {
             _blogRepository.CreateArticle(article);
         }
+
+        // Service -> Delete Article -> Repository Delete
+        public void DeleteArticle(Blog article)
+        {
+            _blogRepository.DeleteArticle(article);
+        }
+
+        public List<Blog> GetArticleByTitle(string title)
+        {
+            if (title == null)
+            {
+                return _blogRepository.GetAllArticles();
+            }
+            else
+            {
+                return _blogRepository.GetByTitle(title);
+            }
+        }
     }
 }

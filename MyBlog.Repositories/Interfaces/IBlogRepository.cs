@@ -10,6 +10,7 @@ namespace MyBlog.Repositories.Interfaces
         List<Blog> GetAllArticles();
         Blog GetArticleById(int id);
         void CreateArticle(Blog article);
-
+        void DeleteArticle(Blog article);
+        List<Blog> GetByTitle(string title);
     }
 }

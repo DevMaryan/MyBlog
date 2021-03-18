@@ -12,6 +12,7 @@ using MyBlog.Repositories.Interfaces;
 using MyBlog.Repositories;
 using MyBlog.Services;
 using MyBlog.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyBlog
 {
@@ -27,10 +28,12 @@ namespace MyBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ArticlesDbContext>(x => x.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = MyArticles; Trusted_Connection = True"));
             services.AddControllersWithViews();
             services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IBlogRepository, BlogRepository>();
             //services.AddTransient<IBlogRepository, BlogFileRepository>();
-            services.AddTransient<IBlogRepository, BlogSqlRepository>();
+            //services.AddTransient<IBlogRepository, BlogSqlRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
