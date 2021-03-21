@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MyBlog.Services;
 using MyBlog.Services.Interfaces;
 using MyBlog.Models;
+using MyBlog.Common.Exceptions;
 
 namespace MyBlog.Controllers
 {
@@ -18,8 +19,9 @@ namespace MyBlog.Controllers
             _service = service;
         }
         // Index Page - Search as well
-        public IActionResult Index(string title)
+        public IActionResult Index(string title, string successMessage)
         {
+            ViewBag.SuccessMessage = successMessage;
             var all_articles = _service.GetArticleByTitle(title);
             return View(all_articles);
         }
@@ -36,39 +38,107 @@ namespace MyBlog.Controllers
             if (ModelState.IsValid)
             {
                 _service.CreateArticle(article);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { SuccessMessage = "Article successfully added." });
             }
             return View(article);
         }
         // Delete Articles
-        public IActionResult Delete(Blog article)
+        public IActionResult Delete(int id)
         {
-            _service.DeleteArticle(article);
-            return RedirectToAction("Index");
-        }
-
-        // Update Articles
-        public IActionResult Update()
-        {
-            return View();
-        }
-
-        // Detail View ARticle
-       
-        public IActionResult Detail(int id)
-        {
-            var select_article = _service.GetArticleById(id);
-            if(select_article == null)
+            try
+            {
+                _service.DeleteArticle(id);
+                return RedirectToAction("Admin", new { SuccessMessage = "Article is deleted successfully." });
+            }
+            catch(NotFoundException ex)
+            {
+                return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
+            }
+            catch(Exception ex)
             {
                 return RedirectToAction("Error", "Info");
             }
-            return View(select_article);
+        }
+
+        // Update Articles - GET Method
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            try
+            {
+                var update_article = _service.GetArticleById(id);
+
+                if (update_article == null)
+                {
+                    return RedirectToAction("Error", "Info");
+                }
+                return View(update_article);
+            }
+            catch (NotFoundException ex)
+            {
+                return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Info");
+            }
+        }
+
+        // Update Articles
+        [HttpPost]
+        public IActionResult Update(int id, string title, string author, string content, string imageurl, DateTime date)
+        {
+            try
+            {
+                var update_article = _service.GetArticleById(id);
+
+                if (update_article == null)
+                {
+                    return RedirectToAction("Error", "Info");
+                }
+                update_article.Author = author;
+                update_article.Content = content;
+                update_article.Date = date;
+                update_article.ImageUrl = imageurl;
+                update_article.Title = title;
+                _service.UpdateArticle(update_article);
+
+                return RedirectToAction("Admin", new { SuccessMessage = "Article is updated successfully." });
+            }
+            catch (NotFoundException ex)
+            {
+                return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Info");
+            }
+        }
+
+        // Detail View ARticle
+
+        public IActionResult Detail(int id)
+        {
+            try
+            {
+                var select_article = _service.GetArticleById(id);
+                if(select_article == null)
+                {
+                    return RedirectToAction("Error", "Info");
+                }
+                return View(select_article);
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Error", "Info", new { Errormessage = ex.Message });
+            }
         }
 
         // Admin Page
-        public IActionResult Admin()
+        public IActionResult Admin(string errorMessage, string successMessage)
         {
-
+            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.SuccessMessage = successMessage;
             var all_articles = _service.GetAllArticles();
             return View(all_articles);
         }

@@ -13,6 +13,7 @@ namespace MyBlog.Services.Interfaces
         Blog GetArticleById(int id);
 
         void CreateArticle(Blog article);
-        void DeleteArticle(Blog article);
+        void UpdateArticle(Blog article);
+        void DeleteArticle(int id);
     }
 }

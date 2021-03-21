@@ -5,6 +5,8 @@ using MyBlog.Models;
 using MyBlog.Repositories;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Services.Interfaces;
+using MyBlog.Common.Exceptions;
+
 namespace MyBlog.Services
 {
     public class BlogService :  IBlogService
@@ -35,11 +37,20 @@ namespace MyBlog.Services
         }
 
         // Service -> Delete Article -> Repository Delete
-        public void DeleteArticle(Blog article)
+        public void DeleteArticle(int id)
         {
-            _blogRepository.DeleteArticle(article);
-        }
+            var article = _blogRepository.GetArticleById(id);
+            if(article == null)
+            {
+                throw new NotFoundException($"The article with {id} was not found.");
+            }
+            else
+            {
+                _blogRepository.DeleteArticle(article);
+            }
 
+        }
+        // Service -> Get Artcile by ID -> Repository Get Title
         public List<Blog> GetArticleByTitle(string title)
         {
             if (title == null)
@@ -50,6 +61,12 @@ namespace MyBlog.Services
             {
                 return _blogRepository.GetByTitle(title);
             }
+        }
+
+        // Service -> Update Article -> Repository UpdateArticle
+        public void UpdateArticle(Blog article)
+        {
+            _blogRepository.UpdateArticle(article);
         }
     }
 }

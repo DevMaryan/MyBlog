@@ -1,37 +1,37 @@
-﻿@{
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model MyBlog.Models.Blog;
+
+@{
     ViewBag.Title = "Update";
 }
 
 <div class="container d-flex justify-content-center">
     <div style="width:600px;">
-        <form>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Article ID</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1">
-            </div>
+        <form asp-controller="Home" asp-action="Update" method="POST">
             <div class="form-group">
                 <label for="exampleFormControlInput1">Article Title</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <input type="text" asp-for ="Title" class="form-control" id="exampleFormControlInput1">
             </div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">Article ImageUrl</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <input type="text" asp-for="ImageUrl" class="form-control" id="exampleFormControlInput1">
             </div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">Article Author</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <input type="text" asp-for="Author" class="form-control" id="exampleFormControlInput1">
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Article Content</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" asp-for="Content" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlInput1">Article Date</label>
-                <input type="date" class="form-control" id="exampleFormControlInput1">
+                <input type="date" class="form-control" asp-for="Date" id="exampleFormControlInput1">
             </div>
-            <button type="submit" class="btn btn-primary btn-lg">Update</button>
+            <button type="submit" value="Update" class="btn btn-primary btn-lg">Update</button>
         </form>
     </div>
 

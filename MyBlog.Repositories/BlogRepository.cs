@@ -45,6 +45,10 @@ namespace MyBlog.Repositories
             return _context.Articles.Where(x => x.Title.Contains(title)).ToList();
         }
 
-
+        public void UpdateArticle(Blog article)
+        {
+            _context.Articles.Update(article);
+            _context.SaveChanges();
+        }
     }
 }

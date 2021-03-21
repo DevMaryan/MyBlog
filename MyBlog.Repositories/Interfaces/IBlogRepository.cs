@@ -11,6 +11,7 @@ namespace MyBlog.Repositories.Interfaces
         Blog GetArticleById(int id);
         void CreateArticle(Blog article);
         void DeleteArticle(Blog article);
+        void UpdateArticle(Blog article);
         List<Blog> GetByTitle(string title);
     }
 }
