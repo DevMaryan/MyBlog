@@ -1,4 +1,4 @@
-﻿@model MyBlog.Models.Blog
+﻿@model MyBlog.ViewModels.BlogDetailModel;
 @{
     ViewBag.Title = @Model.Title;
 }
@@ -11,8 +11,16 @@
                 <div class="single-card-genre">
                     <div class="card-footer">
                         <p class='single-card-title'><b>@Model.Title</b></p>
-                        <small class="text-muted">@Model.Author</small>
-                        <small class="text-muted">@Model.Date</small>
+                        <small class="text-muted"><b>Author</b> @Model.Author |</small>
+                        <small class="text-muted">Created - @Model.Date | </small>
+                        @if (Model.DateModified != null)
+                        {
+                            <small class="text-muted">Modified - @Model.DateModified</small>
+                        }
+                        else
+                        {
+                            <small class="text-muted"></small>
+                        }
                     </div>
 
                 </div>

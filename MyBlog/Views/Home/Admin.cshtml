@@ -1,4 +1,4 @@
-﻿@model List<MyBlog.Models.Blog>
+﻿@model List<MyBlog.ViewModels.BlogAdminModel>
 @{
     ViewBag.Title = "Admin Panel";
 }
@@ -17,7 +17,8 @@ else
                     <th scope="col">Title</th>
                     <th scope="col">Image</th>
                     <th scope="col">Author</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Updated</th>
                     <th scope="col">Read</th>
                     <th scope="col">Update</th>
                     <th scope="col">Delete</th>
@@ -26,16 +27,24 @@ else
             <tbody>
                 @foreach (var article in @Model)
                 {
-                    <tr>
-                        <td>@article.Id</td>
-                        <td>@article.Title</td>
-                        <td><img src="@article.ImageUrl" style="width:45px;height:45px;border-radius:3px;object-fit:cover;" /></td>
-                        <td>@article.Author</td>
-                        <td>@article.Date</td>
-                        <th><a href="/Home/Detail/@article.Id" class="btn btn-info">Read</a></th>
-                        <th><a asp-action="Update" asp-route-id="@article.Id" class="btn btn-warning">Update</a></th>
-                        <th><a href="/Home/Delete/@article.Id" class="btn btn-danger">Delete</a></th>
-                    </tr>
+                <tr>
+                    <td>@article.Id</td>
+                    <td>@article.Title</td>
+                    <td><img src="@article.ImageUrl" style="width:45px;height:45px;border-radius:3px;object-fit:cover;" /></td>
+                    <td>@article.Author</td>
+                    <td>@article.Date</td>
+                    @if (article.DateModified != null)
+                    {
+                        <td>@article.DateModified</td>
+                    }
+                    else
+                    {
+                        <td>-</td>
+                    }
+                    <th><a href="/Home/Detail/@article.Id" class="btn btn-info">Read</a></th>
+                    <th><a asp-action="Update" asp-route-id="@article.Id" class="btn btn-warning">Update</a></th>
+                    <th><a href="/Home/Delete/@article.Id" class="btn btn-danger">Delete</a></th>
+                </tr>
                 }
 
             </tbody>

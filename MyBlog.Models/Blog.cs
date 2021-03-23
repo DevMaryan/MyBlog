@@ -8,7 +8,7 @@ namespace MyBlog.Models
         public int Id { get; set; }
         
         [Required]
-        [StringLength(maximumLength: 50, MinimumLength = 3)]
+        [StringLength(maximumLength: 120, MinimumLength = 3)]
         public string Title { get; set; }
 
         [Required]
@@ -23,5 +23,6 @@ namespace MyBlog.Models
 
         [Required]
         public DateTime Date { get; set; }
+        public DateTime? DateModified { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace MyBlog.Services
         // Service -> CreateArticle -> Repository Create Article 
         public void CreateArticle(Blog article)
         {
+            article.Date = DateTime.Now;
             _blogRepository.CreateArticle(article);
         }
 
@@ -66,7 +67,21 @@ namespace MyBlog.Services
         // Service -> Update Article -> Repository UpdateArticle
         public void UpdateArticle(Blog article)
         {
-            _blogRepository.UpdateArticle(article);
+
+            var updatedArticle = _blogRepository.GetArticleById(article.Id);
+            if (updatedArticle != null)
+            {
+                updatedArticle.Title = article.Title;
+                updatedArticle.ImageUrl = article.ImageUrl;
+                updatedArticle.Content = article.Content;
+                updatedArticle.Author = article.Author;
+                updatedArticle.DateModified = DateTime.Now;
+                _blogRepository.UpdateArticle(updatedArticle);
+            }
+            else
+            {
+                throw new NotFoundException($"The movie with id {article.Id} was not found");
+            }
         }
     }
 }

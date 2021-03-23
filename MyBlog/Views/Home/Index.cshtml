@@ -1,4 +1,4 @@
-﻿@model List<MyBlog.Models.Blog>
+﻿@model List<MyBlog.ViewModels.BlogIndexModel>
 @{
     ViewBag.Title = "My Blog Page";
 }
@@ -17,7 +17,7 @@
                                 <img class="card-img-left" src="@article.ImageUrl" alt="Card image cap" style="height:300px;object-fit:cover;">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">@article.Title</h5>
+                                <h5 class="card-title"><b>@article.Title</b></h5>
                                 <p class="card-text">@article.Content</p>
                             </div>
                         </div>

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyBlog.Services;
 using MyBlog.Services.Interfaces;
-using MyBlog.Models;
+using MyBlog.ViewModels;
+using MyBlog.Mappings;
 using MyBlog.Common.Exceptions;
+
 
 namespace MyBlog.Controllers
 {
@@ -23,7 +25,10 @@ namespace MyBlog.Controllers
         {
             ViewBag.SuccessMessage = successMessage;
             var all_articles = _service.GetArticleByTitle(title);
-            return View(all_articles);
+
+            var articlesIndexModels = all_articles.Select(x => x.ToIndexModel()).ToList();
+
+            return View(articlesIndexModels);
         }
 
         // Create Article
@@ -33,12 +38,13 @@ namespace MyBlog.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Blog article)
+        public IActionResult Create(BlogCreateModel article)
         {
             if (ModelState.IsValid)
             {
-                _service.CreateArticle(article);
-                return RedirectToAction("Index", new { SuccessMessage = "Article successfully added." });
+                var domainModel = article.ToModel();
+                _service.CreateArticle(domainModel);
+                return RedirectToAction("Index", new { SuccessMessage = $"Article {article.Title} successfully added." });
             }
             return View(article);
         }
@@ -48,7 +54,8 @@ namespace MyBlog.Controllers
             try
             {
                 _service.DeleteArticle(id);
-                return RedirectToAction("Admin", new { SuccessMessage = "Article is deleted successfully." });
+                var title = _service.GetArticleById(id);
+                return RedirectToAction("Admin", new { SuccessMessage = $"Article with id {id} has been deleted." });
             }
             catch(NotFoundException ex)
             {
@@ -72,7 +79,7 @@ namespace MyBlog.Controllers
                 {
                     return RedirectToAction("Error", "Info");
                 }
-                return View(update_article);
+                return View(update_article.ToUpdateModel());
             }
             catch (NotFoundException ex)
             {
@@ -86,33 +93,26 @@ namespace MyBlog.Controllers
 
         // Update Articles
         [HttpPost]
-        public IActionResult Update(int id, string title, string author, string content, string imageurl, DateTime date)
+        public IActionResult Update(BlogUpdateModel article)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var update_article = _service.GetArticleById(id);
+                try
+                {
+                    _service.UpdateArticle(article.ToModel());
 
-                if (update_article == null)
+                    return RedirectToAction("Admin", new { SuccessMessage = $"Article {article.Title} updated successfully." });
+                }
+                catch (NotFoundException ex)
+                {
+                    return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
+                }
+                catch (Exception ex)
                 {
                     return RedirectToAction("Error", "Info");
                 }
-                update_article.Author = author;
-                update_article.Content = content;
-                update_article.Date = date;
-                update_article.ImageUrl = imageurl;
-                update_article.Title = title;
-                _service.UpdateArticle(update_article);
-
-                return RedirectToAction("Admin", new { SuccessMessage = "Article is updated successfully." });
             }
-            catch (NotFoundException ex)
-            {
-                return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", "Info");
-            }
+            return View(article);
         }
 
         // Detail View ARticle
@@ -122,11 +122,12 @@ namespace MyBlog.Controllers
             try
             {
                 var select_article = _service.GetArticleById(id);
+
                 if(select_article == null)
                 {
                     return RedirectToAction("Error", "Info");
                 }
-                return View(select_article);
+                return View(select_article.ToDetailModel());
             }
             catch(Exception ex)
             {
@@ -139,8 +140,12 @@ namespace MyBlog.Controllers
         {
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.SuccessMessage = successMessage;
+
             var all_articles = _service.GetAllArticles();
-            return View(all_articles);
+
+            var viewModels = all_articles.Select(x => x.ToAdminModel()).ToList();
+
+            return View(viewModels);
         }
     }
 }

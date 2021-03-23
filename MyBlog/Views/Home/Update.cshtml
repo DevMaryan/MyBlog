@@ -1,6 +1,6 @@
 ﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 
-@model MyBlog.Models.Blog;
+@model MyBlog.ViewModels.BlogUpdateModel;
 
 @{
     ViewBag.Title = "Update";
@@ -26,13 +26,7 @@
                 <label for="exampleFormControlTextarea1">Article Content</label>
                 <textarea class="form-control" asp-for="Content" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Article Date</label>
-                <input type="date" class="form-control" asp-for="Date" id="exampleFormControlInput1">
-            </div>
             <button type="submit" value="Update" class="btn btn-primary btn-lg">Update</button>
         </form>
     </div>
-
 </div>

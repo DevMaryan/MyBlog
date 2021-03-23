@@ -1,5 +1,5 @@
 ﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
-@model MyBlog.Models.Blog;
+@model MyBlog.ViewModels.BlogCreateModel;
 @{
     ViewBag.Title = "Create Article";
 }
@@ -25,10 +25,6 @@
                 <textarea class="form-control" asp-for="Content" id="Content" rows="3" required></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="Date">Article Date</label>
-                <input type="date" asp-for="Date" class="form-control" id="Date" required>
-            </div>
             <button type="submit" class="btn btn-primary btn-lg">Create</button>
         </form>
     </div>
