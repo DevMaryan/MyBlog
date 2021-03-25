@@ -5,7 +5,7 @@ N-Tier Architecture with DI Dipendency Injection pattern:
   <li>Services</li>
   <li>Repositories</li>
   <li>Models</li>
-  <li>Common<li>
+  <li>Common</li>
  </ul>
    
 
