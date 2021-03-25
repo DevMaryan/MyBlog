@@ -8,7 +8,7 @@ using MyBlog.Services.Interfaces;
 using MyBlog.ViewModels;
 using MyBlog.Mappings;
 using MyBlog.Common.Exceptions;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyBlog.Controllers
 {
@@ -32,11 +32,13 @@ namespace MyBlog.Controllers
         }
 
         // Create Article
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public IActionResult Create(BlogCreateModel article)
         {
@@ -49,6 +51,7 @@ namespace MyBlog.Controllers
             return View(article);
         }
         // Delete Articles
+        [Authorize]
         public IActionResult Delete(int id)
         {
             try
@@ -68,6 +71,7 @@ namespace MyBlog.Controllers
         }
 
         // Update Articles - GET Method
+        [Authorize]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -90,7 +94,7 @@ namespace MyBlog.Controllers
                 return RedirectToAction("Error", "Info");
             }
         }
-
+        [Authorize]
         // Update Articles
         [HttpPost]
         public IActionResult Update(BlogUpdateModel article)
@@ -136,6 +140,7 @@ namespace MyBlog.Controllers
         }
 
         // Admin Page
+        [Authorize]
         public IActionResult Admin(string errorMessage, string successMessage)
         {
             ViewBag.ErrorMessage = errorMessage;

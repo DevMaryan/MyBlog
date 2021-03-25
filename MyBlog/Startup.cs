@@ -13,7 +13,7 @@ using MyBlog.Repositories;
 using MyBlog.Services;
 using MyBlog.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MyBlog
 {
@@ -30,9 +30,19 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ArticlesDbContext>(x => x.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = MyArticles; Trusted_Connection = True"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.LoginPath = "/Auth/SignIn"; options.LogoutPath = "/Auth/SignOut"; });
+
+
             services.AddControllersWithViews();
+
+            // Services
             services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IAuthService, AuthService>();
+
+            // Repositories
             services.AddTransient<IBlogRepository, BlogRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             //services.AddTransient<IBlogRepository, BlogFileRepository>();
             //services.AddTransient<IBlogRepository, BlogSqlRepository>();
         }
@@ -55,6 +65,8 @@ namespace MyBlog
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

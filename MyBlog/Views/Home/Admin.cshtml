@@ -10,8 +10,8 @@ else
 {
     <div id="container">
 
-        <table class="table">
-            <thead class="thead-dark">
+        <table class="table table-hover ">
+            <thead class="thead-dark ">
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Title</th>
@@ -19,7 +19,7 @@ else
                     <th scope="col">Author</th>
                     <th scope="col">Created</th>
                     <th scope="col">Updated</th>
-                    <th scope="col">Read</th>
+                    <th scope="col">View</th>
                     <th scope="col">Update</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -41,9 +41,9 @@ else
                     {
                         <td>-</td>
                     }
-                    <th><a href="/Home/Detail/@article.Id" class="btn btn-info">Read</a></th>
-                    <th><a asp-action="Update" asp-route-id="@article.Id" class="btn btn-warning">Update</a></th>
-                    <th><a href="/Home/Delete/@article.Id" class="btn btn-danger">Delete</a></th>
+                    <th><a href="/Home/Detail/@article.Id" class="btn btn-info">View</a></th>
+                    <th><a asp-action="Update" asp-route-id="@article.Id" class="btn btn-warning text-light">Update</a></th>
+                    <th><a href="/Home/Delete/@article.Id" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></th>
                 </tr>
                 }
 

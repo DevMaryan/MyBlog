@@ -28,16 +28,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="About">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Create</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Create</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
                 <form action="/Home/Index" method="GET" class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" name="Title" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <a asp-area="" asp-controller="Home" asp-action="Admin" class="btn btn-outline-info ml-1">Dashboard</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="Admin" class="btn btn-outline-info ml-1">Dashboard</a>
+
+                }
+
             </div>
         </nav>
     </header>
@@ -50,15 +59,24 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - MyBlog All Rights are reserved.  <a asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
+            &copy; 2021 - MyBlog All Rights are reserved.
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="btn btn-info">Welcome  @User.FindFirst("Username").Value</p>
+
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Auth" asp-action="SignIn" class="btn btn-outline-primary">Sign In</a>
+                <a asp-area="" asp-controller="Auth" asp-action="SignUp" class="btn btn-outline-success">Sign Up</a>
+            }
+
         </div>
         <div style="position:relative;">
             <!-- Toast MSG-->
             @if (ViewBag.SuccessMessage != null)
             {
                 <div id="msgbox" class="msgbox">@ViewBag.SuccessMessage<span id="msg_close">&times;</span></div>
-
-
             }
 
             <!-- ENDMSG -->
