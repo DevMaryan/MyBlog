@@ -1,4 +1,4 @@
-# <h3>MyBlog built based on N-Tier Architecture with fully functional CRUD operations, as well authentication. When the User is logged in, he can use CUD operations otherwise he can only read articles, as well there is a dashboard where the User can manage his articles. MyBlog has Sign In,as well Sign Up form. </h3>
+# <h3>MyBlog is built based on N-Tier Architecture with fully functional CRUD operations, as well authentication. When the User is logged in, he can use CUD operations otherwise he can only read articles, as well there is a dashboard where the User can manage his articles. MyBlog has Sign In,as well Sign Up form. </h3>
 N-Tier Architecture with DI Dipendency Injection pattern:
 <ul>
   <li>MyBlog</li>
