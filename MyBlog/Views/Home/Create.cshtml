@@ -15,10 +15,19 @@
                 <label for="ImageUrl">Article ImageUrl</label>
                 <input type="text" asp-for="ImageUrl" class="form-control" id="ImageUrl" required>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+            <div class="form-group">
+                <label for="Author">Article Author</label>
+                <input type="text" asp-for="Author" class="form-control" id="Author" value="@User.FindFirst("Username").Value" required>
+            </div>
+            }else{
             <div class="form-group">
                 <label for="Author">Article Author</label>
                 <input type="text" asp-for="Author" class="form-control" id="Author" required>
             </div>
+            }
+
 
             <div class="form-group">
                 <label for="Content">Article Content</label>
