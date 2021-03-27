@@ -41,10 +41,16 @@
                     <input class="form-control mr-sm-2" name="Title" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
+                @if (!User.Identity.IsAuthenticated)
+            {
+            <a asp-area="" asp-controller="Auth" asp-action="SignIn" class="btn btn-outline-info ml-1">Sign In</a>
+            }
+                
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a asp-area="" asp-controller="Home" asp-action="Admin" class="btn btn-outline-info ml-1">Dashboard</a>
-
+                    <a asp-area="" asp-controller="Users" asp-action="Details" class="btn btn-info ml-1">Profile</a>
+                    <a asp-area="" asp-controller="Auth" asp-action="SignOut" class="btn btn-info ml-1">Sign Out</a>
                 }
 
             </div>

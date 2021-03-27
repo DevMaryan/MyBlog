@@ -31,7 +31,12 @@ namespace MyBlog
         {
             services.AddDbContext<ArticlesDbContext>(x => x.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = MyArticles; Trusted_Connection = True"));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.LoginPath = "/Auth/SignIn"; options.LogoutPath = "/Auth/SignOut"; });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { 
+                options.LoginPath = "/Auth/SignIn"; 
+                options.LogoutPath = "/Auth/SignOut";
+                options.ExpireTimeSpan = TimeSpan.FromSeconds(15); // If the user is not active 15secounds it sign out
+
+            });
 
 
             services.AddControllersWithViews();
@@ -39,10 +44,11 @@ namespace MyBlog
             // Services
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersService, UserService>();
 
             // Repositories
             services.AddTransient<IBlogRepository, BlogRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
             //services.AddTransient<IBlogRepository, BlogFileRepository>();
             //services.AddTransient<IBlogRepository, BlogSqlRepository>();
         }

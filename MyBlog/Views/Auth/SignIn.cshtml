@@ -10,7 +10,7 @@ else
     <div class="container d-flex justify-content-center">
         <div style="width:300px;">
             <p>Sign in into your account</p>
-            <form asp-controller="Auth" asp-action="SignIn" method="POST">
+            <form asp-controller="Auth" asp-action="SignIn" asp-route-returnUrl="@Context.Request.Query["returnUrl"] "method="POST">
                 <input type="text" asp-for="Username" placeholder="username" class="form-control mb-1" required />
                 <input type="password" asp-for="Password" placeholder="password" class="form-control mb-1" required />
                 <input type="submit" value="Sign in" class="btn btn-primary btn-block mt-2" />

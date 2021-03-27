@@ -24,15 +24,23 @@ namespace MyBlog.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SignIn(SignInModel signInModel)
+        public IActionResult SignIn(SignInModel signInModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                var response = _authService.SignIn(signInModel.Username, signInModel.Password, HttpContext);
+                var response = _authService.SignIn(signInModel.Username, signInModel.Password, signInModel.IsPersistent,  HttpContext);
 
                 if (response == true)
                 {
-                    return RedirectToAction("Index", "Home", new { SuccessMessage = $"User {signInModel.Username} is logged in." });
+                    if(returnUrl == null)
+                    {
+                        return RedirectToAction("Index", "Home", new { SuccessMessage = $"User {signInModel.Username} is logged in." });
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
+
                 }
                 else
                 {
@@ -43,6 +51,12 @@ namespace MyBlog.Controllers
             {
                 return View(signInModel);
             }
+        }
+        // User SignOut
+        public IActionResult SignOut()
+        {
+            _authService.SignOut(HttpContext);
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult SignUp()
