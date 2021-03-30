@@ -21,8 +21,9 @@ namespace MyBlog.Controllers
             _service = service;
         }
         // Index Page - Search as well
-        public IActionResult Index(string title, string successMessage)
+        public IActionResult Index(string title, string successMessage,string ErrorMessage)
         {
+            ViewBag.ErrorMessage = ErrorMessage;
             ViewBag.SuccessMessage = successMessage;
             var all_articles = _service.GetArticleByTitle(title);
 
@@ -64,7 +65,7 @@ namespace MyBlog.Controllers
             {
                 return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return RedirectToAction("Error", "Info");
             }
@@ -89,7 +90,7 @@ namespace MyBlog.Controllers
             {
                 return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Info");
             }
@@ -111,7 +112,7 @@ namespace MyBlog.Controllers
                 {
                     return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return RedirectToAction("Error", "Info");
                 }

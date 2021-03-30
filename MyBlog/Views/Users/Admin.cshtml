@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MyBlog.ViewModels.UserAdminModel>
+
+@{
+    ViewData["Title"] = "User Admin";
+}
+
+@if (Model.Count() == 0)
+{
+    <p>No Data</p>
+}
+else
+{
+    <div id="container">
+
+        <table class="table table-hover ">
+            <thead class="thead-dark ">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Is Admin</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in @Model)
+                {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Username</td>
+                    <td>@user.Address</td>
+                    <td>@user.Email</td>
+                    <td>@user.DateCreated</td>
+                    <td>@user.IsAdmin</td>
+                    <th><a href="/Users/Update/@user.Id" class="btn btn-warning"><i class="fas fa-pencil-alt text-light" ></i></a></th>
+                    <th><a href="/Users/Delete/@user.Id" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a></th>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+}

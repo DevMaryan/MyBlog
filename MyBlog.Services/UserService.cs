@@ -2,6 +2,7 @@
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Models;
 using MyBlog.Common.Exceptions;
+using System.Collections.Generic;
 
 namespace MyBlog.Services
 {
@@ -31,6 +32,7 @@ namespace MyBlog.Services
                 user_update.Id = user.Id;
                 user_update.Email = user.Email;
                 user_update.Address = user.Address;
+                user_update.IsAdmin = user.IsAdmin;
 
                 _usersRepository.UpdateUser(user_update);
             }
@@ -39,5 +41,36 @@ namespace MyBlog.Services
                 throw new NotFoundException($"The movie with id {user_update.Id} was not found");
             }
         }
+        public void DeleteUser(int id)
+        {
+            var user = _usersRepository.GetById(id);
+            if (user != null)
+            {
+                _usersRepository.Delete(user);
+            }
+
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _usersRepository.GetAll();
+        }
+
+        public void IsAdmin(User user)
+        {
+            var user_update = _usersRepository.GetById(user.Id);
+            if (user_update != null)
+            {
+                user_update.IsAdmin = user.IsAdmin;
+
+                _usersRepository.SetIsAdmin(user_update);
+            }
+            else
+            {
+                throw new NotFoundException($"User with id {user_update.Id} was not found");
+            }
+
+        }
+
     }
 }

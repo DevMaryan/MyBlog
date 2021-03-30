@@ -5,7 +5,7 @@ namespace MyBlog.ViewModels
     public class SignInModel
     {
         [Required]
-        [StringLength(maximumLength: 30, MinimumLength = 5)]
+        [StringLength(maximumLength: 30, MinimumLength = 3)]
         public string Username { get; set; }
 
         [Required]

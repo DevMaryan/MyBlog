@@ -5,9 +5,11 @@ using MyBlog.Common.Exceptions;
 using System;
 using MyBlog.Mappings;
 using MyBlog.ViewModels;
+using System.Linq;
 
 namespace MyBlog.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
 
@@ -16,10 +18,11 @@ namespace MyBlog.Controllers
         {
             _userService = userService;
         }
-        [Authorize]
-        public IActionResult Details(string successMessage)
+
+        public IActionResult Details(string SuccessMessage,string ErrorMessage)
         {
-            ViewBag.SuccessMessage = successMessage;
+            ViewBag.SuccessMessage = SuccessMessage;
+            ViewBag.ErrorMessage = ErrorMessage;
             var userId = User.FindFirst("Id").Value;
             var user = _userService.GetDetails(userId);
 
@@ -50,18 +53,53 @@ namespace MyBlog.Controllers
                 {
                     var the_user = _userService.GetDetails(user_id.Id);
                     _userService.UpdateUser(user_id.ToModel());
-                    return RedirectToAction("Details", new { SuccessMessage = "Your profile is updated." });
+                    if (Convert.ToBoolean(User.FindFirst("IsAdmin").Value))
+                    {
+                        return RedirectToAction("Admin", new { SuccessMessage = $"The {the_user.Username} is updated." });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", new { SuccessMessage = "Your profile is updated." });
+                    }
+                    
                 }
                 catch (NotFoundException ex)
                 {
                     return RedirectToAction("Admin", new { ErrorMessage = ex.Message });
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return RedirectToAction("Error", "Info");
                 }
             }
             return View(user_id);
+        }
+
+        // User Admin Panel
+        public IActionResult Admin(string SuccessMessage, string ErrorMessage)
+        {
+            ViewBag.SuccessMessage = SuccessMessage;
+            ViewBag.ErrorMessage = ErrorMessage;
+            var all_users = _userService.GetAllUsers();
+
+            var viewModels = all_users.Select(x => x.ToAdminModel()).ToList();
+
+
+            return View(viewModels);
+        }
+
+        // User Delete
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _userService.DeleteUser(id);
+                return RedirectToAction("Admin", new { SuccessMessage = "User deleted." });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Info", "Error");
+            }
         }
     }
 }

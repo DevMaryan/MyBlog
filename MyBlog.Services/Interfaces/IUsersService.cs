@@ -1,4 +1,5 @@
 ﻿using MyBlog.Models;
+using System.Collections.Generic;
 
 namespace MyBlog.Services.Interfaces
 {
@@ -8,5 +9,11 @@ namespace MyBlog.Services.Interfaces
         User GetDetails(int userId);
 
         void UpdateUser(User user);
+
+        List<User> GetAllUsers();
+        void DeleteUser(int id);
+
+        void IsAdmin(User user);
+
     }
 }

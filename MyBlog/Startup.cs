@@ -34,10 +34,18 @@ namespace MyBlog
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { 
                 options.LoginPath = "/Auth/SignIn"; 
                 options.LogoutPath = "/Auth/SignOut";
-                options.ExpireTimeSpan = TimeSpan.FromSeconds(15); // If the user is not active 15secounds it sign out
+                options.AccessDeniedPath = "/Auth/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromHours(4); // If the user is not active 15secounds it sign out
 
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", policy =>
+                {
+                    policy.RequireClaim("IsAdmin", "True");
+                });
+            });
 
             services.AddControllersWithViews();
 
