@@ -21,6 +21,7 @@ else
                     <th scope="col">Email</th>
                     <th scope="col">Created</th>
                     <th scope="col">Is Admin</th>
+                    <th scope="col">Change Role to</th>
                     <th scope="col">Update</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -34,8 +35,24 @@ else
                     <td>@user.Address</td>
                     <td>@user.Email</td>
                     <td>@user.DateCreated</td>
-                    <td>@user.IsAdmin</td>
-                    <th><a href="/Users/Update/@user.Id" class="btn btn-warning"><i class="fas fa-pencil-alt text-light" ></i></a></th>
+                    @if (user.IsAdmin)
+                    {
+                        <td class="text-center"><i class="fas fa-crown fa-2x" style="color:#ff6a00"></i></td>
+                    }
+                    else
+                    {
+                        <td class="text-center"><i class="fas fa-user-slash fa-2x"></i></td>
+                    }
+                    @if (user.IsAdmin)
+                    {
+                        <th><a href="/Users/MakeAdmin/@user.Id" class="btn btn-danger">!Admin</a></th>
+                    }
+                    else
+                    {
+                        <th><a href="/Users/MakeAdmin/@user.Id" class="btn btn-info">Admin</a></th>
+                    }
+
+                    <th><a href="/Users/Update/@user.Id" class="btn btn-warning"><i class="fas fa-pencil-alt text-light"></i></a></th>
                     <th><a href="/Users/Delete/@user.Id" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a></th>
                 </tr>
                 }

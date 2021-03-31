@@ -14,6 +14,6 @@ namespace MyBlog.Services.Interfaces
         void DeleteUser(int id);
 
         void IsAdmin(User user);
-
+        bool ToggleIsAdmin(int id);
     }
 }

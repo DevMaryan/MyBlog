@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyBlog.Models
@@ -24,5 +25,7 @@ namespace MyBlog.Models
         [Required]
         public DateTime Date { get; set; }
         public DateTime? DateModified { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

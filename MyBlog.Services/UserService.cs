@@ -34,7 +34,7 @@ namespace MyBlog.Services
                 user_update.Address = user.Address;
                 user_update.IsAdmin = user.IsAdmin;
 
-                _usersRepository.UpdateUser(user_update);
+                _usersRepository.Update(user_update);
             }
             else
             {
@@ -72,5 +72,21 @@ namespace MyBlog.Services
 
         }
 
+        public bool ToggleIsAdmin(int id)
+        {
+            var response = false;
+            var selected_user = _usersRepository.GetById(id);
+            if(selected_user != null)
+            {
+                selected_user.IsAdmin = !selected_user.IsAdmin;
+                _usersRepository.Update(selected_user);
+                response = true;
+            }
+            else
+            {
+                response = false;
+            }
+            return response;
+        }
     }
 }

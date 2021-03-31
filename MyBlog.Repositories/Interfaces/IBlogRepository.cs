@@ -5,13 +5,9 @@ using MyBlog.Models;
 
 namespace MyBlog.Repositories.Interfaces
 {
-    public interface IBlogRepository
+    public interface IBlogRepository : IBaseRepository<Blog>
     {
-        List<Blog> GetAllArticles();
-        Blog GetArticleById(int id);
-        void CreateArticle(Blog article);
-        void DeleteArticle(Blog article);
-        void UpdateArticle(Blog article);
+
         List<Blog> GetByTitle(string title);
     }
 }

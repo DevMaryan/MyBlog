@@ -21,33 +21,33 @@ namespace MyBlog.Services
         // Service -> GetAllArticles -> Repository
         public List<Blog> GetAllArticles()
         {
-            return _blogRepository.GetAllArticles();
+            return _blogRepository.GetAll();
         }
 
         // Service -> Get Article id -> Repository by id
         public Blog GetArticleById(int id)
         {
-            return _blogRepository.GetArticleById(id);
+            return _blogRepository.GetById(id);
         }
 
         // Service -> CreateArticle -> Repository Create Article 
         public void CreateArticle(Blog article)
         {
             article.Date = DateTime.Now;
-            _blogRepository.CreateArticle(article);
+            _blogRepository.Add(article);
         }
 
         // Service -> Delete Article -> Repository Delete
         public void DeleteArticle(int id)
         {
-            var article = _blogRepository.GetArticleById(id);
+            var article = _blogRepository.GetById(id);
             if(article == null)
             {
                 throw new NotFoundException($"The article with {id} was not found.");
             }
             else
             {
-                _blogRepository.DeleteArticle(article);
+                _blogRepository.Delete(article);
             }
 
         }
@@ -56,7 +56,7 @@ namespace MyBlog.Services
         {
             if (title == null)
             {
-                return _blogRepository.GetAllArticles();
+                return _blogRepository.GetAll();
             }
             else
             {
@@ -68,7 +68,7 @@ namespace MyBlog.Services
         public void UpdateArticle(Blog article)
         {
 
-            var updatedArticle = _blogRepository.GetArticleById(article.Id);
+            var updatedArticle = _blogRepository.GetById(article.Id);
             if (updatedArticle != null)
             {
                 updatedArticle.Title = article.Title;
@@ -76,7 +76,7 @@ namespace MyBlog.Services
                 updatedArticle.Content = article.Content;
                 updatedArticle.Author = article.Author;
                 updatedArticle.DateModified = DateTime.Now;
-                _blogRepository.UpdateArticle(updatedArticle);
+                _blogRepository.Update(updatedArticle);
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyBlog.Models
@@ -20,5 +21,7 @@ namespace MyBlog.Models
 
         [Required]
         public bool IsAdmin { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

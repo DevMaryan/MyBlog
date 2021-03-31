@@ -80,9 +80,10 @@ namespace MyBlog.Controllers
         {
             ViewBag.SuccessMessage = SuccessMessage;
             ViewBag.ErrorMessage = ErrorMessage;
+            var id = int.Parse(User.FindFirst("Id").Value);
             var all_users = _userService.GetAllUsers();
 
-            var viewModels = all_users.Select(x => x.ToAdminModel()).ToList();
+            var viewModels = all_users.Where(x => x.Id != id).Select(x => x.ToAdminModel()).ToList();
 
 
             return View(viewModels);
@@ -99,6 +100,27 @@ namespace MyBlog.Controllers
             catch (Exception)
             {
                 return RedirectToAction("Info", "Error");
+            }
+        }
+
+        // Make Admin
+        public IActionResult MakeAdmin(int id)
+        {
+            try
+            {
+                var select_user = _userService.ToggleIsAdmin(id);
+                if (select_user)
+                {
+                    return RedirectToAction("Admin", new { SuccessMessage = "User admin role is updated." });
+                }
+                else
+                {
+                    return RedirectToAction("Admin", new { SuccessMessage = "User not found." });
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Admin", new { ErrorMessage = "Unexpected happened." });
             }
         }
     }
