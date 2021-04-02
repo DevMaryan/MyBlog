@@ -15,5 +15,6 @@ namespace MyBlog.Services.Interfaces
         void CreateArticle(Blog article);
         void UpdateArticle(Blog article);
         void DeleteArticle(int id);
+        bool Like(int id);
     }
 }

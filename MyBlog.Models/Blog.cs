@@ -27,5 +27,8 @@ namespace MyBlog.Models
         public DateTime? DateModified { get; set; }
 
         public List<Comment> Comments { get; set; }
+
+        public bool Likes { get; set; }
+
     }
 }

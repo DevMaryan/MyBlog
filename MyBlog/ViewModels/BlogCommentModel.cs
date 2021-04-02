@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 
 namespace MyBlog.ViewModels
 {
-    public class UserDetailsModel
+    public class BlogCommentModel
     {
         public int Id { get; set; }
+        public string Message { get; set; }
+        public DateTime DateCreated { get; set; }
         public string Username { get; set; }
-
-        public string Address { get; set; }
-
-        public string Email { get; set; }
-
     }
 }

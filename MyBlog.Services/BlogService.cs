@@ -27,7 +27,7 @@ namespace MyBlog.Services
         // Service -> Get Article id -> Repository by id
         public Blog GetArticleById(int id)
         {
-            return _blogRepository.GetById(id);
+            return _blogRepository.GetByArticleId(id);
         }
 
         // Service -> CreateArticle -> Repository Create Article 
@@ -82,6 +82,23 @@ namespace MyBlog.Services
             {
                 throw new NotFoundException($"The movie with id {article.Id} was not found");
             }
+        }
+
+        public bool Like(int id)
+        {
+            var response = false;
+            var the_article = _blogRepository.GetById(id);
+            if (the_article != null)
+            {
+                the_article.Likes = !the_article.Likes;
+                _blogRepository.Update(the_article);
+                response = true;
+            }
+            else
+            {
+                response = false;
+            }
+            return response;
         }
     }
 }

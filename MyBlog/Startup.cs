@@ -53,10 +53,12 @@ namespace MyBlog
             services.AddTransient<IBlogService, BlogService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUsersService, UserService>();
+            services.AddTransient<ICommentsService, CommentsService>();
 
             // Repositories
             services.AddTransient<IBlogRepository, BlogRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<ICommentsRepository, CommentsRepository>();
             //services.AddTransient<IBlogRepository, BlogFileRepository>();
             //services.AddTransient<IBlogRepository, BlogSqlRepository>();
         }

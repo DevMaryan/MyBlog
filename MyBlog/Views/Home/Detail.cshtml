@@ -21,6 +21,18 @@
                         {
                             <small class="text-muted"></small>
                         }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (Model.Like)
+                            {
+                                <a href="/Home/Like/@Model.Id"><i class="fas fa-heart fa-2x"></i></a>
+                            }
+                            else
+                            {
+                                <a href="/Home/Like/@Model.Id"><i class="far fa-heart fa-2x"></i></a>
+                            }
+                        }
+
                     </div>
 
                 </div>
@@ -30,6 +42,54 @@
                 <p>@Model.Content</p>
                 <br>
             </div>
+
+            <!-- Comment Section-->
+            <!-- Comment POST-->
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Comments" asp-action="Add" method="POST">
+                    <input type="text" name="articleId" value="@Model.Id" hidden />
+                    <div class="form-group">
+                        <textarea type="text" name="comment" class="form-control" cols="20" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            }
+            @if (Model.Comments.Count() > 0)
+            {
+                @foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
+                {
+                    <div class="container badge-light m-1 p-2">
+                        <div class="row">
+                            <div class="col-12 text-info row ml-2">
+                                @comment.Username -
+                                @comment.DateCreated
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @if (User.FindFirst("Username").Value == comment.Username)
+                                    {
+                                        <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id"><div class="text-danger p-1"><i class="fas fa-trash-alt"></i></div></a>
+                                    }
+
+
+                                }
+                            </div>
+
+                        </div>
+                        <p class="comment-message p-3">@comment.Message</p>
+
+
+                    </div>
+                }
+
+
+            }
+            else
+            {
+                <p>No Comments</p>
+            }
+
+
         </div>
         <br>
         <a href="/Home/Index" class="btn btn-outline-primary">Back</a>

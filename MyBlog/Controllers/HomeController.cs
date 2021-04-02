@@ -132,7 +132,8 @@ namespace MyBlog.Controllers
                 {
                     return RedirectToAction("Error", "Info");
                 }
-                return View(select_article.ToDetailModel());
+                var viewModel = select_article.ToDetailModel();
+                return View(viewModel);
             }
             catch(Exception ex)
             {
@@ -153,5 +154,28 @@ namespace MyBlog.Controllers
 
             return View(viewModels);
         }
+
+        public IActionResult Like(int id)
+        {
+            try
+            {
+                var select_article = _service.Like(id);
+
+                if (select_article)
+                {
+                    return RedirectToAction("Detail", new { id = id });
+                }
+                else
+                {
+                    return RedirectToAction("Admin", new { SuccessMessage = "User not found." });
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Admin", new { ErrorMessage = "Unexpected happened." });
+            }
+        }
+
+
     }
 }

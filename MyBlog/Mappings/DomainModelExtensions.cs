@@ -2,6 +2,7 @@
 using MyBlog.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyBlog.Mappings
 {
@@ -44,6 +45,19 @@ namespace MyBlog.Mappings
                 Author = article.Author,
                 Date = article.Date,
                 DateModified = article.DateModified,
+                Like = article.Likes,
+                Comments = article.Comments.Select(x => x.ToCommentModel()).ToList()
+
+            };
+        }
+        public static BlogCommentModel ToCommentModel(this Comment comment)
+        {
+            return new BlogCommentModel
+            {
+                Id = comment.Id,
+                Message = comment.Message,
+                DateCreated = comment.DateCreated,
+                Username = comment.User.Username
             };
         }
         public static BlogUpdateModel ToUpdateModel(this Blog article)
