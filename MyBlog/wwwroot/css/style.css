@@ -29,3 +29,6 @@ input[type=number] {
     cursor: pointer;
 
 }
+#btn_show{
+    display:none !important;
+}

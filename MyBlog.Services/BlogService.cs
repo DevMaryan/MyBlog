@@ -30,6 +30,23 @@ namespace MyBlog.Services
             return _blogRepository.GetByArticleId(id);
         }
 
+        // Service -> Get Article id -> Repository by id
+        public Blog GetArticleDetails(int id)
+        {
+            var article = GetArticleById(id);
+
+            if (article == null)
+            {
+                return article;
+            }
+
+            article.Views++;
+
+            _blogRepository.Update(article);
+
+            return article;
+        }
+
         // Service -> CreateArticle -> Repository Create Article 
         public void CreateArticle(Blog article)
         {

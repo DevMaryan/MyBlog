@@ -17,5 +17,7 @@ namespace MyBlog.ViewModels
         public DateTime? DateModified { get; set; }
         public bool Like { get; set; }
         public List<BlogCommentModel> Comments { get; set; }
+
+        public int Views { get; set; }
     }
 }

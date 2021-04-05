@@ -1,40 +1,173 @@
-﻿@model List<MyBlog.ViewModels.BlogIndexModel>
+﻿@model MyBlog.ViewModels.BlogIndexDataModel;
 @{
     ViewBag.Title = "My Blog Page";
 }
+@section Style{ 
+    <style>
+        #big-container{
+            position:relative;
+        }
+        .side-bar-left {
+            position: absolute;
+            left: -280px;
+            top: 15px;
+            padding: 1rem;
+            background-color: #f2f2f229;
+            width: 280px;
+        }
+        .side-bar-left a{
+            text-decoration:none;
+            color:#666;
+        }
+        .side-bar {
+            position: absolute;
+            right: -280px;
+            top: 15px;
+            padding: 1rem;
+            background-color: #f2f2f229;
+            width:280px;
+        }
+        .side-bar a{
+            text-decoration:none;
+            color:#666;
+        }
+        .card-article img {
+            width: 25px;
+            height: 25px;
+            border-radius: 3px;
+            object-fit: cover;
+        }
+        .card-article{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            align-content:center;
+        }
 
-<div class="container-fluid">
+        .card-article p{
+            padding:0.3px 1rem;
+            color:#666;
+        }
+        .card-article-title{
+            align-self:flex-start;
+        }
+        .btn-view-eye {
+            padding: 5px;
+            background-color: #0E7486;
+            color: #FFF;
+            position: relative;
+            border-radius: 3px;
+        }
+        .btn-view-eye-span {
+            padding:0px 5px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            background-color: #25A2B8;
+            color: #FFF;
+            border-radius:0px 3px 3px 0px;
+        }
+        .mr{
+            margin-right:20px;
+        }
+        .card-combo {
+            display: flex;
+            align-content: center;
+        }
+        .card-text {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+}
 
-    @foreach (var article in @Model)
+<div class="container-fluid" id="big-container">
+
+    @foreach (var article in @Model.IndexModels)
     {
-    <a asp-controller="Home" asp-action="Detail" asp-route-id="@article.Id" style="text-decoration:none;color:#666;">
-        <div class="row">
-            <div class="col-12 mt-3">
-                <div class="card">
-                    <div class="card-horizontal">
-                        <div class="img-square-wrapper">
-                            <div class="card">
-                                <img class="card-img-left" src="@article.ImageUrl" alt="Card image cap" style="height:300px;object-fit:cover;">
+        <a asp-controller="Home" asp-action="Detail" asp-route-id="@article.Id" style="text-decoration:none;color:#666;">
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="card">
+                        <div class="card-horizontal">
+                            <div class="img-square-wrapper">
+                                <div class="card">
+                                    <img class="card-img-left" src="@article.ImageUrl" alt="Card image cap" style="height:300px;object-fit:cover;">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>@article.Title</b></h5>
+                                    <p class="card-text">@article.Content</p>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><b>@article.Title</b></h5>
-                                <p class="card-text">@article.Content</p>
+                            <div class="card-footer">
+                                <small class="text-muted">@article.Author</small>
+                                <small class="text-muted">@article.Date</small>
+                                <small class="text-muted"><i class="far fa-eye"></i> @article.Views</small>
+                                <a href="/Home/Detail/@article.Id"><button class="btn btn-primary">Read More</button></a>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">@article.Author</small>
-                            <small class="text-muted">@article.Date</small>
-                            <a href="/Home/Detail/@article.Id"><button class="btn btn-primary">Read More</button></a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
     }
+    <div class="side-bar-left">
+        <h5>Most viewed</h5>
+        <a href="">
+            <div class="card-article">
+                <div class="card-combo">
+                    <img src="https://assets.entrepreneur.com/content/3x2/2000/1615924087-GettyImages-1207077269.jpg?format=jpg&width=300&crop=1:1" />
+                    <p>Title</p>
+                </div>
+                <p class="btn-view-eye"><i class="far fa-eye mr text-light"></i><span class="btn-view-eye-span">23</span></p>
+            </div>
+        </a>
+        <div class="card-article">
+            <div class="card-combo">
+                <img src="https://assets.entrepreneur.com/content/3x2/2000/1615924087-GettyImages-1207077269.jpg?format=jpg&width=300&crop=1:1" />
+                <p>Title</p>
+            </div>
+            <p class="btn-view-eye"><i class="far fa-eye mr text-light"></i><span class="btn-view-eye-span">23</span></p>
+        </div>
+        <div class="card-article">
+            <div class="card-combo">
+                <img src="https://assets.entrepreneur.com/content/3x2/2000/1615924087-GettyImages-1207077269.jpg?format=jpg&width=300&crop=1:1" />
+                <p>Title</p>
+            </div>
+            <p class="btn-view-eye"><i class="far fa-eye mr text-light"></i><span class="btn-view-eye-span">23</span></p>
+        </div>
+    </div>
+    <div class="side-bar">
+        <h5>Top 5 articles</h5>
+        <a href="">
+            <div class="card-article">
+                <div class="card-combo">
+                    <img src="https://assets.entrepreneur.com/content/3x2/2000/1615924087-GettyImages-1207077269.jpg?format=jpg&width=300&crop=1:1" />
+                    <p>Title</p>
+                </div>
+                <p class="btn-view-eye"><i class="far fa-eye mr text-light"></i><span class="btn-view-eye-span">23</span></p>
+            </div>
+        </a>
+        <div class="card-article">
+            <div class="card-combo">
+                <img src="https://assets.entrepreneur.com/content/3x2/2000/1615924087-GettyImages-1207077269.jpg?format=jpg&width=300&crop=1:1" />
+                <p>Title</p>
+            </div>
+            <p class="btn-view-eye"><i class="far fa-eye mr text-light"></i><span class="btn-view-eye-span">23</span></p>
+        </div>
+        <div class="card-article">
+            <div class="card-combo">
+                <img src="https://assets.entrepreneur.com/content/3x2/2000/1615924087-GettyImages-1207077269.jpg?format=jpg&width=300&crop=1:1" />
+                <p>Title</p>
+            </div>
+            <p class="btn-view-eye"><i class="far fa-eye mr text-light"></i><span class="btn-view-eye-span">23</span></p>
+        </div>
+    </div>
+
+
 
 </div>
-
-
 
 

@@ -2,6 +2,11 @@
 @{
     ViewBag.Title = @Model.Title;
 }
+<style>
+    #comment_btn {
+        display: none;
+    }
+</style>
 <div id="container3">
     <div id="wrapper">
         <!-- SINGLE MOVIE CARD-->
@@ -11,6 +16,7 @@
                 <div class="single-card-genre">
                     <div class="card-footer">
                         <p class='single-card-title'><b>@Model.Title</b></p>
+                        <small class="text-muted"><b>Views</b> @Model.Views |</small>
                         <small class="text-muted"><b>Author</b> @Model.Author |</small>
                         <small class="text-muted">Created - @Model.Date | </small>
                         @if (Model.DateModified != null)
@@ -46,13 +52,14 @@
             <!-- Comment Section-->
             <!-- Comment POST-->
             @if (User.Identity.IsAuthenticated)
-            {
-                <form asp-controller="Comments" asp-action="Add" method="POST">
+            { 
+                <form asp-controller="Comments" asp-action="Add" method="POST" id="comment-form">
                     <input type="text" name="articleId" value="@Model.Id" hidden />
                     <div class="form-group">
-                        <textarea type="text" name="comment" class="form-control" cols="20" rows="3" required></textarea>
+                        <textarea type="text" name="comment" onkeypress="CheckLength();" class="form-control" cols="20" rows="3" required id="textarea"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                    <small id="msg_small" style="display:block;color:red;"></small>
+                    <button id="comment_btn" type="submit" class="btn btn-primary">Add Comment</button>
                 </form>
             }
             @if (Model.Comments.Count() > 0)
@@ -70,19 +77,12 @@
                                     {
                                         <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id"><div class="text-danger p-1"><i class="fas fa-trash-alt"></i></div></a>
                                     }
-
-
                                 }
                             </div>
-
                         </div>
                         <p class="comment-message p-3">@comment.Message</p>
-
-
                     </div>
                 }
-
-
             }
             else
             {
@@ -95,3 +95,7 @@
         <a href="/Home/Index" class="btn btn-outline-primary">Back</a>
     </div>
 </div>
+
+@section Scripts{ 
+    <script src="~/js/comment_validator.js"></script>
+}

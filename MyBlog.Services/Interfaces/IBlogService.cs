@@ -12,6 +12,7 @@ namespace MyBlog.Services.Interfaces
 
         Blog GetArticleById(int id);
 
+        Blog GetArticleDetails(int id);
         void CreateArticle(Blog article);
         void UpdateArticle(Blog article);
         void DeleteArticle(int id);

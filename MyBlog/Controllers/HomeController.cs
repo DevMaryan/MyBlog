@@ -25,11 +25,16 @@ namespace MyBlog.Controllers
         {
             ViewBag.ErrorMessage = ErrorMessage;
             ViewBag.SuccessMessage = successMessage;
+
             var all_articles = _service.GetArticleByTitle(title);
+
+            var IndexDataModel = new BlogIndexDataModel();
 
             var articlesIndexModels = all_articles.Select(x => x.ToIndexModel()).ToList();
 
-            return View(articlesIndexModels);
+            IndexDataModel.IndexModels = articlesIndexModels;
+
+            return View(IndexDataModel);
         }
 
         // Create Article
@@ -126,13 +131,14 @@ namespace MyBlog.Controllers
         {
             try
             {
-                var select_article = _service.GetArticleById(id);
+                var select_article = _service.GetArticleDetails(id);
 
                 if(select_article == null)
                 {
                     return RedirectToAction("Error", "Info");
                 }
                 var viewModel = select_article.ToDetailModel();
+
                 return View(viewModel);
             }
             catch(Exception ex)

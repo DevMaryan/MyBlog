@@ -30,5 +30,7 @@ namespace MyBlog.Models
 
         public bool Likes { get; set; }
 
+        public int Views { get; set; }
+
     }
 }

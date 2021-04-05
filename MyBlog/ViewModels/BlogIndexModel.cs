@@ -14,5 +14,7 @@ namespace MyBlog.ViewModels
         public string Author { get; set; }
         public DateTime Date { get; set; }
 
+        public int Views { get; set; }
+
     }
 }

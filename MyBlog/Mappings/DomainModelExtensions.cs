@@ -32,6 +32,7 @@ namespace MyBlog.Mappings
                 ImageUrl = article.ImageUrl,
                 Author = article.Author,
                 Date = article.Date,
+                Views = article.Views,
             };
         }
         public static BlogDetailModel ToDetailModel(this Blog article)
@@ -46,8 +47,8 @@ namespace MyBlog.Mappings
                 Date = article.Date,
                 DateModified = article.DateModified,
                 Like = article.Likes,
-                Comments = article.Comments.Select(x => x.ToCommentModel()).ToList()
-
+                Comments = article.Comments.Select(x => x.ToCommentModel()).ToList(),
+                Views = article.Views,
             };
         }
         public static BlogCommentModel ToCommentModel(this Comment comment)
