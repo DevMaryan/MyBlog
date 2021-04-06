@@ -13,6 +13,9 @@ Features:
   <li>Review Rating</li>
   <li>Article Comments</li>
   <li>Article View Counter</li>
+  <li>Sign In</li>
+  <li>Sign Up</li>
+  <li>Admin Dashboard</li>
   
  </ul>
 <p>Front-End tecnology: HTML, Bootstrap, JavaScript</p>
