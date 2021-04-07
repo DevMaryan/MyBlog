@@ -8,7 +8,7 @@
 
 <div class="container-fluid" id="big-container">
 
-    @foreach (var article in @Model.IndexModels)
+    @foreach (var article in @Model.IndexModels.OrderByDescending(x => x.Date))
     {
         <a asp-controller="Home" asp-action="Detail" asp-route-id="@article.Id" style="text-decoration:none;color:#666;">
             <div class="row">
