@@ -23,7 +23,7 @@ Features:
 <p>Front-End tecnology: HTML, Bootstrap, JavaScript</p>
 <p>Back-End: C# .Net Core</p>
 
-<img src="https://i.ibb.co/dBtq4Z5/blog-new.png" alt="blog-new" border="0">
+<img src="https://i.ibb.co/vvn3c4C/sidebar.png" alt="sidebar" border="0">
 <img src="https://i.ibb.co/mCbYyXW/detail-article.png" alt="detail-article" border="0">
 <img src="https://i.ibb.co/gdgNb9w/blog-new.png" alt="blog-new" border="0">
 <img src="https://i.ibb.co/bNQwtrS/ss13.png" alt="ss13" border="0">
