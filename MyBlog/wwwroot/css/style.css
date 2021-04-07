@@ -32,3 +32,6 @@ input[type=number] {
 #btn_show{
     display:none !important;
 }
+#comment_btn {
+    display: none;
+}

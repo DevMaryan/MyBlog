@@ -10,6 +10,6 @@ namespace MyBlog.ViewModels
         public List<BlogIndexModel> IndexModels { get; set; }
 
         public List<BlogRatingModel> Ratings { get; set; }
-        public string SidebarData { get; set; }
+        public BlogSidebarDataModel SidebarData { get; set; } = new BlogSidebarDataModel();
     }
 }

@@ -117,5 +117,17 @@ namespace MyBlog.Mappings
             };
         }
 
+        public static BlogSidebarModel ToBlogSideBarModel(this Blog article)
+        {
+            return new BlogSidebarModel
+            {
+                Id = article.Id,
+                Title = article.Title,
+                ImageUrl = article.ImageUrl,
+                Views = article.Views,
+                DateCreated = article.Date
+            };
+        }
+
     }
 }

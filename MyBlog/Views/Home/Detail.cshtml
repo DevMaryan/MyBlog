@@ -1,10 +1,16 @@
-﻿@model MyBlog.ViewModels.BlogDetailModel;
+﻿@model MyBlog.ViewModels.BlogDetailDataModel;
 @{
-    ViewBag.Title = @Model.Title;
+    ViewBag.Title = @Model.BlogDetail.Title;
+}
+@section Style{
+    <link href="~/css/sidebar.css" rel="stylesheet" />
 }
 <style>
     #comment_btn {
         display: none;
+    }
+    #container3{
+        position:relative;
     }
 </style>
 <div id="container3">
@@ -12,16 +18,16 @@
         <!-- SINGLE MOVIE CARD-->
         <div class="single-card">
             <div class="flx">
-                <img class="single-card-img" src="@Model.ImageUrl" style="width:100%;height:300px;object-fit:cover; border-radius:3px 3px 0px 0px;">
+                <img class="single-card-img" src="@Model.BlogDetail.ImageUrl" style="width:100%;height:300px;object-fit:cover; border-radius:3px 3px 0px 0px;">
                 <div class="single-card-genre">
                     <div class="card-footer">
-                        <p class='single-card-title'><b>@Model.Title</b></p>
-                        <small class="text-muted"><b>Views</b> @Model.Views |</small>
-                        <small class="text-muted"><b>Author</b> @Model.Author |</small>
-                        <small class="text-muted">Created - @Model.Date | </small>
-                        @if (Model.DateModified != null)
+                        <p class='single-card-title'><b>@Model.BlogDetail.Title</b></p>
+                        <small class="text-muted"><b>Views</b> @Model.BlogDetail.Views |</small>
+                        <small class="text-muted"><b>Author</b> @Model.BlogDetail.Author |</small>
+                        <small class="text-muted">Created - @Model.BlogDetail.Date | </small>
+                        @if (Model.BlogDetail.DateModified != null)
                         {
-                            <small class="text-muted">Modified - @Model.DateModified</small>
+                            <small class="text-muted">Modified - @Model.BlogDetail.DateModified</small>
                         }
                         else
                         {
@@ -29,13 +35,13 @@
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @if (Model.Like)
+                            @if (Model.BlogDetail.Like)
                             {
-                                <a href="/Home/Like/@Model.Id"><i class="fas fa-heart fa-2x"></i></a>
+                                <a href="/Home/Like/@Model.BlogDetail.Id"><i class="fas fa-heart fa-2x"></i></a>
                             }
                             else
                             {
-                                <a href="/Home/Like/@Model.Id"><i class="far fa-heart fa-2x"></i></a>
+                                <a href="/Home/Like/@Model.BlogDetail.Id"><i class="far fa-heart fa-2x"></i></a>
                             }
                         }
 
@@ -45,11 +51,11 @@
             </div>
             <div class="single-card-description">
                 <br>
-                <p>@Model.Content</p>
+                <p>@Model.BlogDetail.Content</p>
                 <br>
             </div>
             <p>Review:</p>
-            <div >
+            <div>
                 <span id="star_1" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
                 <span id="star_2" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
                 <span id="star_3" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
@@ -58,15 +64,15 @@
             </div>
 
             <form asp-controller="Ratings" asp-action="Add" method="POST" class="comments-form">
-                <input type="text" name="blogId" value="@Model.Id" hidden />
+                <input type="text" name="blogId" value="@Model.BlogDetail.Id" hidden />
                 <input type="number" max="5" min="1" name="Score" onchange="StarCounter();" id="counter_number" hidden required>
                 <button type="submit" style="padding:0.3rem 1rem; border-radius:3px; cursor:pointer;color:#FFF; background-color:#ff6a00;border:0;">Rate</button>
             </form>
 
 
-            @if (Model.Ratings.Count > 0)
+            @if (Model.BlogDetail.Ratings.Count > 0)
             {
-                <p>@Convert.ToInt32(Model.Ratings.Average(x => x.Score)) / 5</p>
+                <p>@Convert.ToInt32(Model.BlogDetail.Ratings.Average(x => x.Score)) / 5</p>
             }
 
             <!-- Comment Section-->
@@ -74,7 +80,7 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <form asp-controller="Comments" asp-action="Add" method="POST" id="comment-form">
-                    <input type="text" name="articleId" value="@Model.Id" hidden />
+                    <input type="text" name="articleId" value="@Model.BlogDetail.Id" hidden />
                     <div class="form-group">
                         <textarea type="text" name="comment" onkeydown="CheckLength()" class="form-control" cols="20" rows="3" required id="textarea" placeholder="Write something..."></textarea>
                     </div>
@@ -82,9 +88,9 @@
                     <button id="comment_btn" type="submit" class="btn btn-primary">Add Comment</button>
                 </form>
             }
-            @if (Model.Comments.Count() > 0)
+            @if (Model.BlogDetail.Comments.Count() > 0)
             {
-                @foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
+                @foreach (var comment in Model.BlogDetail.Comments.OrderByDescending(x => x.DateCreated))
                 {
                     <div class="container badge-light m-1 p-2">
                         <div class="row">
@@ -114,128 +120,14 @@
         <br>
         <a href="/Home/Index" class="btn btn-outline-primary">Back</a>
     </div>
+
+    <div class="side-bar-left">
+        <partial name="SidebarPartial" for="@Model.blogSidebarData" />
+    </div>
 </div>
-<script>
-    //function StarCounter() {
-    //    var counter_number = document.getElementById('counter_number').value;
-    //    var star_span = document.getElementById('star_rate');
-    //    if (counter_number == 1) {
-    //        star_span.innerHTML = "<i class='fas fa-star' ></i>"
-    //    } else if (counter_number == 2) {
-    //        star_span.innerHTML = "<i class='fas fa-star' ></i><i class='fas fa-star' ></i>"
-    //    } else if (counter_number == 3) {
-    //        star_span.innerHTML = "<i class='fas fa-star' ></i><i class='fas fa-star' ></i><i class='fas fa-star' ></i>"
-    //    }else if (counter_number == 4) {
-    //        star_span.innerHTML = "<i class='fas fa-star' ></i><i class='fas fa-star' ></i><i class='fas fa-star' ></i><i class='fas fa-star' ></i>"
-    //    }
-    //    else if (counter_number == 5) {
-    //        star_span.innerHTML = "<i class='fas fa-star' ></i><i class='fas fa-star' ></i><i class='fas fa-star' ></i><i class='fas fa-star' ></i><i class='fas fa-star' ></i>"
-    //    }
-    //}
 
 
-    var star_1 = document.getElementById('star_1');
-    star_1.addEventListener('click', function () {
-        var x = document.getElementById("counter_number");
-        star_1.style.color = "gold";
-        star_2.style.color = "gray";
-        star_3.style.color = "gray";
-        star_4.style.color = "gray";
-        star_5.style.color = "gray";
-        x.value = 1;
-    })
-    star_1.addEventListener('mouseover', function () {
-        var x = document.getElementById("counter_number");
-        x.value = 1;
-        star_1.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_2.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-        star_3.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-        star_4.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-        star_5.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-    })
-
-    var star_2 = document.getElementById('star_2');
-    star_2.addEventListener('click', function () {
-        var x = document.getElementById("counter_number");
-        star_1.style.color = "gold";
-        star_2.style.color = "gold";
-        star_3.style.color = "gray";
-        star_4.style.color = "gray";
-        star_5.style.color = "gray";
-        x.value = 2;
-    })
-    star_2.addEventListener('mouseover', function () {
-        var x = document.getElementById("counter_number");
-        x.value = 2;
-        star_1.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_2.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_3.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-        star_4.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-        star_5.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-    })
-
-    var star_3 = document.getElementById('star_3');
-    star_3.addEventListener('click', function () {
-        var x = document.getElementById("counter_number");
-        star_1.style.color = "gold";
-        star_2.style.color = "gold";
-        star_3.style.color = "gold";
-        star_4.style.color = "gray";
-        star_5.style.color = "gray";
-        x.value = 3;
-    })
-    star_3.addEventListener('mouseover', function () {
-        var x = document.getElementById("counter_number");
-        x.value = 3;
-        star_1.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_2.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_3.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_4.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-        star_5.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-    })
-
-    var star_4 = document.getElementById('star_4');
-    star_4.addEventListener('click', function () {
-        var x = document.getElementById("counter_number");
-        star_1.style.color = "gold";
-        star_2.style.color = "gold";
-        star_3.style.color = "gold";
-        star_4.style.color = "gold";
-        star_5.style.color = "gray";
-        x.value = 4;
-    })
-    star_4.addEventListener('mouseover', function () {
-        var x = document.getElementById("counter_number");
-        x.value = 4;
-        star_1.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_2.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_3.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_4.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_5.innerHTML = "<i class='far fa-star' style='color:gray'></i>";
-    })
-
-    var star_5 = document.getElementById('star_5');
-    star_5.addEventListener('click', function () {
-        var x = document.getElementById("counter_number");
-        star_1.style.color = "gold";
-        star_2.style.color = "gold";
-        star_3.style.color = "gold";
-        star_4.style.color = "gold";
-        star_5.style.color = "gold";
-        x.value = 5;
-    })
-    star_5.addEventListener('mouseover', function () {
-        var x = document.getElementById("counter_number");
-        x.value = 5;
-        star_1.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_2.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_3.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_4.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-        star_5.innerHTML = "<i class='fas fa-star' style='color:gold'></i>";
-    })
-
-</script>
-
-@section Scripts{ 
+@section Scripts{
+    <script src="~/js/rating-stars.js"></script>
     <script src="~/js/comment_validator.js"></script>
 }

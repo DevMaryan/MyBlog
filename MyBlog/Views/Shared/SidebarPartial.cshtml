@@ -1,0 +1,36 @@
+﻿@model MyBlog.ViewModels.BlogSidebarDataModel;
+
+<h5>Most viewed</h5>
+@foreach (var article in Model.TopArticles)
+{
+
+    <a asp-controller="Home" asp-action="Detail" asp-route-id="@article.Id">
+        <div class="card-article">
+            <div class="card-combo">
+                <img src="@article.ImageUrl" />
+                <p>@article.Title</p>
+            </div>
+            <p class="btn-view-eye"><span class="btn-view-eye-span"><i class="far fa-eye mr text-light"></i>@article.Views</span></p>
+        </div>
+    </a>
+
+}
+</div>
+
+<div class="side-bar">
+    <h5>Top 5 articles</h5>
+    @foreach (var article in Model.MostRecentArticles)
+    {
+        <a asp-controller="Home" asp-action="Detail" asp-route-id="@article.Id">
+            <div class="card-article">
+                <div class="card-combo">
+                    <img src="@article.ImageUrl" />
+                    <p>@article.Title</p>
+                </div>
+                <p class="btn-view-eye"><span class="btn-view-eye-span"><i class="far fa-eye mr text-light"></i>@article.Views</span></p>
+            </div>
+        </a>
+
+    }
+
+

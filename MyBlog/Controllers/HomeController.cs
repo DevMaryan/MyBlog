@@ -16,9 +16,12 @@ namespace MyBlog.Controllers
     {
         public IBlogService _service { get; set; }
 
-        public HomeController(IBlogService service)
+        public ISidebarService _sidebarService { get; set; }
+
+        public HomeController(IBlogService service, ISidebarService sidebarService)
         {
             _service = service;
+            _sidebarService = sidebarService;
         }
         // Index Page - Search as well
         public IActionResult Index(string title, string successMessage,string ErrorMessage)
@@ -28,7 +31,6 @@ namespace MyBlog.Controllers
 
             var all_articles = _service.GetArticleByTitle(title);
 
-            var avg_score = _service.AvgScore();
 
 
             var IndexDataModel = new BlogIndexDataModel();
@@ -36,6 +38,7 @@ namespace MyBlog.Controllers
             var articlesIndexModels = all_articles.Select(x => x.ToIndexModel()).ToList();
 
             IndexDataModel.IndexModels = articlesIndexModels;
+            IndexDataModel.SidebarData = _sidebarService.GetSidebarData();
 
             return View(IndexDataModel);
         }
@@ -140,9 +143,19 @@ namespace MyBlog.Controllers
                 {
                     return RedirectToAction("Error", "Info");
                 }
-                var viewModel = select_article.ToDetailModel();
 
-                return View(viewModel);
+                var blogDetailsDataModel = new BlogDetailDataModel();
+
+                blogDetailsDataModel.BlogDetail = select_article.ToDetailModel();
+
+                blogDetailsDataModel.blogSidebarData = _sidebarService.GetSidebarData();
+
+
+                //var viewModel = select_article.ToDetailModel();
+
+
+
+                return View(blogDetailsDataModel);
             }
             catch(Exception ex)
             {

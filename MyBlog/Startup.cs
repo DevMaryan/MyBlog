@@ -55,7 +55,7 @@ namespace MyBlog
             services.AddTransient<IUsersService, UserService>();
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IRatingsService, RatingsService>();
-
+            services.AddTransient<ISidebarService, SidebarService>();
 
             // Repositories
             services.AddTransient<IBlogRepository, BlogRepository>();

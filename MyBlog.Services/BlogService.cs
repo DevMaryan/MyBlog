@@ -118,9 +118,15 @@ namespace MyBlog.Services
             return response;
         }
 
-        public double AvgScore()
+
+        public List<Blog> GetMostRecentArticles(int count)
         {
-            return _blogRepository.AvgScore();
+            return _blogRepository.GetMostRecentArticles(count);
+        }
+
+        public List<Blog> GetTopArticles(int count)
+        {
+            return _blogRepository.GetTopArticles(count);
         }
     }
 }

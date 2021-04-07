@@ -11,6 +11,7 @@ namespace MyBlog.Repositories.Interfaces
         List<Blog> GetByTitle(string title);
         Blog GetByArticleId(int entityId);
 
-        double AvgScore();
+        List<Blog> GetMostRecentArticles(int count);
+        List<Blog> GetTopArticles(int count);
     }
 }

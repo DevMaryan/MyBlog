@@ -33,10 +33,15 @@ namespace MyBlog.Repositories
             return article;
         }
 
-        public double AvgScore()
-        {
 
-            return _context.Ratings.Average(x => x.Score);
+        public List<Blog> GetMostRecentArticles(int count)
+        {
+            return _context.Articles.OrderByDescending(x => x.Date).Take(count).ToList();
+        }
+
+        public List<Blog> GetTopArticles(int count)
+        {
+            return _context.Articles.OrderByDescending(x => x.Views).Take(count).ToList();
         }
     }
 }
