@@ -18,7 +18,7 @@
 </div>
 
 <div class="side-bar">
-    <h5>Top 5 articles</h5>
+    <h5>Newest articles</h5>
     @foreach (var article in Model.MostRecentArticles)
     {
         <a asp-controller="Home" asp-action="Detail" asp-route-id="@article.Id">

@@ -62,12 +62,15 @@
                 <span id="star_4" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
                 <span id="star_5" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
             </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Ratings" asp-action="Add" method="POST" class="comments-form">
+                    <input type="text" name="blogId" value="@Model.BlogDetail.Id" hidden />
+                    <input type="number" max="5" min="1" name="Score" onchange="StarCounter();" id="counter_number" hidden required>
+                    <button type="submit" style="padding:0.3rem 1rem; border-radius:3px; cursor:pointer;color:#FFF; background-color:#ff6a00;border:0;">Rate</button>
+                </form>
+            }
 
-            <form asp-controller="Ratings" asp-action="Add" method="POST" class="comments-form">
-                <input type="text" name="blogId" value="@Model.BlogDetail.Id" hidden />
-                <input type="number" max="5" min="1" name="Score" onchange="StarCounter();" id="counter_number" hidden required>
-                <button type="submit" style="padding:0.3rem 1rem; border-radius:3px; cursor:pointer;color:#FFF; background-color:#ff6a00;border:0;">Rate</button>
-            </form>
 
 
             @if (Model.BlogDetail.Ratings.Count > 0)

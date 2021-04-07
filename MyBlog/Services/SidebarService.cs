@@ -20,8 +20,8 @@ namespace MyBlog.Services
         {
             var sidebarDataModel = new BlogSidebarDataModel();
 
-            var mostRecentArticles = _service.GetMostRecentArticles(5);
-            var topArticles = _service.GetTopArticles(5);
+            var mostRecentArticles = _service.GetMostRecentArticles(3);
+            var topArticles = _service.GetTopArticles(3);
 
 
 
