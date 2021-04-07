@@ -14,6 +14,7 @@
     .side-bar-left a {
         text-decoration: none;
         color: #666;
+        margin:10px 0px;
     }
 
 .side-bar {
@@ -31,8 +32,8 @@
     }
 
 .card-article img {
-    width: 25px;
-    height: 25px;
+    width: 85px;
+    height: 85px;
     border-radius: 3px;
     object-fit: cover;
 }
@@ -42,10 +43,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
+    margin:15px 0px;
+    padding:0.5rem;
+    transition:0.3s ease-in-out;
 }
+    .card-article:hover {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        background-color: #dddddd47;
+    }
 
     .card-article p {
-        padding: 0.3px 1rem;
         color: #666;
     }
 
@@ -63,8 +70,8 @@
 .btn-view-eye-span {
     padding: 0px 5px;
     position: absolute;
-    right: 0px;
-    top: 0px;
+    right: 20px;
+    top: 10px;
     background-color: #25A2B8;
     color: #FFF;
     border-radius: 3px;
@@ -80,6 +87,7 @@
 .card-combo {
     display: flex;
     align-content: center;
+    flex-direction: column;
 }
 
 .card-text {
