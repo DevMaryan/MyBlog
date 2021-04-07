@@ -28,6 +28,9 @@ namespace MyBlog.Controllers
 
             var all_articles = _service.GetArticleByTitle(title);
 
+            var avg_score = _service.AvgScore();
+
+
             var IndexDataModel = new BlogIndexDataModel();
 
             var articlesIndexModels = all_articles.Select(x => x.ToIndexModel()).ToList();
@@ -132,7 +135,7 @@ namespace MyBlog.Controllers
             try
             {
                 var select_article = _service.GetArticleDetails(id);
-
+          
                 if(select_article == null)
                 {
                     return RedirectToAction("Error", "Info");

@@ -10,5 +10,7 @@ namespace MyBlog.Repositories.Interfaces
 
         List<Blog> GetByTitle(string title);
         Blog GetByArticleId(int entityId);
+
+        double AvgScore();
     }
 }

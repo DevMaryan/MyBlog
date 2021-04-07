@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlog.Repositories;
 
 namespace MyBlog.Repositories.Migrations
 {
     [DbContext(typeof(ArticlesDbContext))]
-    partial class ArticlesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210405224646_RatingAdded")]
+    partial class RatingAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,31 +91,6 @@ namespace MyBlog.Repositories.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("MyBlog.Models.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BlogId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Ratings");
-                });
-
             modelBuilder.Entity("MyBlog.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -157,21 +134,6 @@ namespace MyBlog.Repositories.Migrations
 
                     b.HasOne("MyBlog.Models.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyBlog.Models.Rating", b =>
-                {
-                    b.HasOne("MyBlog.Models.Blog", "Blog")
-                        .WithMany("Ratings")
-                        .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyBlog.Models.User", "User")
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

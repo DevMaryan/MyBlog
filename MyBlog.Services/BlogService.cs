@@ -117,5 +117,10 @@ namespace MyBlog.Services
             }
             return response;
         }
+
+        public double AvgScore()
+        {
+            return _blogRepository.AvgScore();
+        }
     }
 }

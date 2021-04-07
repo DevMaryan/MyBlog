@@ -16,5 +16,6 @@ namespace MyBlog.ViewModels
 
         public int Views { get; set; }
 
+
     }
 }

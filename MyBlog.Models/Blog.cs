@@ -28,6 +28,8 @@ namespace MyBlog.Models
 
         public List<Comment> Comments { get; set; }
 
+        public List<Rating> Ratings { get; set; }
+
         public bool Likes { get; set; }
 
         public int Views { get; set; }

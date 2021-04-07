@@ -27,9 +27,16 @@ namespace MyBlog.Repositories
             var article = _context.Articles
                  .Include(x => x.Comments)
                      .ThenInclude(x => x.User)
+                .Include(x => x.Ratings)
+                    .ThenInclude(x => x.User)
                  .FirstOrDefault(x => x.Id == entityId);
             return article;
         }
 
+        public double AvgScore()
+        {
+
+            return _context.Ratings.Average(x => x.Score);
+        }
     }
 }

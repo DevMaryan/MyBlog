@@ -48,6 +48,7 @@ namespace MyBlog.Mappings
                 DateModified = article.DateModified,
                 Like = article.Likes,
                 Comments = article.Comments.Select(x => x.ToCommentModel()).ToList(),
+                Ratings = article.Ratings.Select(x => x.ToRatingModel()).ToList(),
                 Views = article.Views,
             };
         }
@@ -59,6 +60,16 @@ namespace MyBlog.Mappings
                 Message = comment.Message,
                 DateCreated = comment.DateCreated,
                 Username = comment.User.Username
+            };
+        }
+        public static BlogRatingModel ToRatingModel(this Rating score)
+        {
+            return new BlogRatingModel
+            {
+                Id = score.Id,
+                Score = score.Score,
+                BlogId = score.BlogId,
+                Username = score.User.Username
             };
         }
         public static BlogUpdateModel ToUpdateModel(this Blog article)

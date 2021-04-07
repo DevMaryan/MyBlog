@@ -18,6 +18,8 @@ namespace MyBlog.ViewModels
         public bool Like { get; set; }
         public List<BlogCommentModel> Comments { get; set; }
 
+        public List<BlogRatingModel> Ratings { get; set; }
+
         public int Views { get; set; }
     }
 }

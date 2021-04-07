@@ -8,6 +8,8 @@ namespace MyBlog.ViewModels
     public class BlogIndexDataModel
     {
         public List<BlogIndexModel> IndexModels { get; set; }
+
+        public List<BlogRatingModel> Ratings { get; set; }
         public string SidebarData { get; set; }
     }
 }
