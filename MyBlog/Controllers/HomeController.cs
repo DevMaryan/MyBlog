@@ -31,8 +31,6 @@ namespace MyBlog.Controllers
 
             var all_articles = _service.GetArticleByTitle(title);
 
-
-
             var IndexDataModel = new BlogIndexDataModel();
 
             var articlesIndexModels = all_articles.Select(x => x.ToIndexModel()).ToList();

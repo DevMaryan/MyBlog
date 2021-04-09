@@ -14,6 +14,7 @@ using MyBlog.Services;
 using MyBlog.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MyBlog.Common.Options;
 
 namespace MyBlog
 {
@@ -29,14 +30,19 @@ namespace MyBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ArticlesDbContext>(x => x.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = MyArticles; Trusted_Connection = True"));
+            services.AddDbContext<ArticlesDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
+
+
+            //var cookieExprrTime = Configuration.GetValue<int>("CookieExpirationPeriod");
+            //var topRecipesCount = Configuration["SidebarConfig:TopRecipesCount"];
+
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { 
                 options.LoginPath = "/Auth/SignIn"; 
                 options.LogoutPath = "/Auth/SignOut";
                 options.AccessDeniedPath = "/Auth/AccessDenied";
-                options.ExpireTimeSpan = TimeSpan.FromHours(4); // If the user is not active 15secounds it sign out
-
+                options.ExpireTimeSpan = TimeSpan.FromHours(int.Parse(Configuration["CookieExpirationPeriod"])); // If the user is not active 15secounds it sign out
+                //options.ExpireTimeSpan = TimeSpan.FromHours(4); // If the user is not active 15secounds it sign out
             });
 
             services.AddAuthorization(options =>
@@ -48,6 +54,10 @@ namespace MyBlog
             });
 
             services.AddControllersWithViews();
+
+
+            // Configure options
+            services.Configure<SidebarConfig>(Configuration.GetSection("SidebarConfig"));
 
             // Services
             services.AddTransient<IBlogService, BlogService>();
@@ -76,7 +86,7 @@ namespace MyBlog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Info/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

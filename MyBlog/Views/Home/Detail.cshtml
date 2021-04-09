@@ -54,14 +54,18 @@
                 <p>@Model.BlogDetail.Content</p>
                 <br>
             </div>
-            <p>Review:</p>
-            <div>
-                <span id="star_1" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
-                <span id="star_2" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
-                <span id="star_3" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
-                <span id="star_4" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
-                <span id="star_5" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>Review:</p>
+                <div>
+                    <span id="star_1" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
+                    <span id="star_2" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
+                    <span id="star_3" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
+                    <span id="star_4" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
+                    <span id="star_5" style="font-size:20px;cursor:pointer;"><i class='far fa-star'></i></span>
+                </div>
+            }
+
             @if (User.Identity.IsAuthenticated)
             {
                 <form asp-controller="Ratings" asp-action="Add" method="POST" class="comments-form">
