@@ -9,19 +9,24 @@ using MyBlog.ViewModels;
 using MyBlog.Mappings;
 using MyBlog.Common.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using MyBlog.Common.Logs.Models;
+using MyBlog.Common.Logs.Services;
+using MyBlog.Common.Logs;
 
 namespace MyBlog.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogService _logService;
         public IBlogService _service { get; set; }
 
         public ISidebarService _sidebarService { get; set; }
 
-        public HomeController(IBlogService service, ISidebarService sidebarService)
+        public HomeController(IBlogService service, ISidebarService sidebarService, ILogService logService)
         {
             _service = service;
             _sidebarService = sidebarService;
+            _logService = logService;
         }
         // Index Page - Search as well
         public IActionResult Index(string title, string successMessage,string ErrorMessage)
@@ -56,6 +61,12 @@ namespace MyBlog.Controllers
             {
                 var domainModel = article.ToModel();
                 _service.CreateArticle(domainModel);
+
+                // Log Service
+                var userId = User.FindFirst("Id");
+                var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created article {article.Title}" };
+                _logService.Log(logData);
+
                 return RedirectToAction("Index", new { SuccessMessage = $"Article {article.Title} successfully added." });
             }
             return View(article);
@@ -66,8 +77,18 @@ namespace MyBlog.Controllers
         {
             try
             {
-                _service.DeleteArticle(id);
+                // Find the Article title
                 var title = _service.GetArticleById(id);
+
+                // Log Service -> Send the title and the User to Logs
+                var userId = User.FindFirst("Id");
+                var logData = new LogData() { Type = LogType.Warning, DateCreated = DateTime.Now, Message = $"User with id {userId} deleted article {title.Title}" };
+                _logService.Log(logData);
+
+
+                // Delete the article
+                _service.DeleteArticle(id);
+
                 return RedirectToAction("Admin", new { SuccessMessage = $"Article with id {id} has been deleted." });
             }
             catch(NotFoundException ex)

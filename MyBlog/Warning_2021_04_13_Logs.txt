@@ -1,0 +1,1 @@
+{"Type":1,"Message":"User with id Id: 7 deleted article qweqweqwq","DateCreated":"2021-04-13T20:09:17.5653134+02:00"}

@@ -15,6 +15,8 @@ using MyBlog.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MyBlog.Common.Options;
+using MyBlog.Common.Logs.Services;
+using MyBlog.Middleware;
 
 namespace MyBlog
 {
@@ -66,6 +68,7 @@ namespace MyBlog
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IRatingsService, RatingsService>();
             services.AddTransient<ISidebarService, SidebarService>();
+            services.AddTransient<ILogService, LogService>();
 
             // Repositories
             services.AddTransient<IBlogRepository, BlogRepository>();
@@ -98,6 +101,10 @@ namespace MyBlog
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionLoggingMiddleware>();
+
+            app.UseMiddleware<RequestResponseLogMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
